@@ -3,13 +3,7 @@ module Raylib
 using Base: make_typealias
 const raylib = "libraylib.so"
 
-macro dcl(T, args...)
-    r = quote end
-    for var in args
-        push!(r.args, :(local $(esc(var))::$T = zero($T)))
-    end
-    r
-end
+const Cbool = Bool
 
 "Vector2, 2 components"
 struct Vector2
@@ -350,7 +344,7 @@ end
 "RayCollision, ray hit information"
 struct RayCollision
     "Did the ray hit something?"
-    hit::Cint # bool               
+    hit::Cbool
     "Distance to the nearest hit"
     distance::Cfloat
     "Point of the nearest hit"
@@ -419,7 +413,7 @@ struct Music
     "Total number of frames (considering channels)"
     frameCount::Cuint
     "Music looping enable"
-    looping::Cint # bool               
+    looping::Cbool
 
     "Type of music context (audio filetype)"
     ctxType::Cint
@@ -575,232 +569,232 @@ end
 """
 module KeyboardKey
 "Key: NULL, used for no key pressed"
-const KEY_NULL = 0
+const KEY_NULL::Cint = 0
 # "Alphanumeric keys"
 "Key: '"
-const KEY_APOSTROPHE = 39
+const APOSTROPHE::Cint = 39
 "Key: ,"
-const KEY_COMMA = 44
+const COMMA::Cint = 44
 "Key: -"
-const KEY_MINUS = 45
+const MINUS::Cint = 45
 "Key: ."
-const KEY_PERIOD = 46
+const PERIOD::Cint = 46
 "Key: /"
-const KEY_SLASH = 47
+const SLASH::Cint = 47
 "Key: 0"
-const KEY_ZERO = 48
+const ZERO::Cint = 48
 "Key: 1"
-const KEY_ONE = 49
+const ONE::Cint = 49
 "Key: 2"
-const KEY_TWO = 50
+const TWO::Cint = 50
 "Key: 3"
-const KEY_THREE = 51
+const THREE::Cint = 51
 "Key: 4"
-const KEY_FOUR = 52
+const FOUR::Cint = 52
 "Key: 5"
-const KEY_FIVE = 53
+const FIVE::Cint = 53
 "Key: 6"
-const KEY_SIX = 54
+const SIX::Cint = 54
 "Key: 7"
-const KEY_SEVEN = 55
+const SEVEN::Cint = 55
 "Key: 8"
-const KEY_EIGHT = 56
+const EIGHT::Cint = 56
 "Key: 9"
-const KEY_NINE = 57
+const NINE::Cint = 57
 "Key: ;"
-const KEY_SEMICOLON = 59
+const SEMICOLON::Cint = 59
 "Key: ="
-const KEY_EQUAL = 61
+const EQUAL::Cint = 61
 "Key: A | a"
-const KEY_A = 65
+const A::Cint = 65
 "Key: B | b"
-const KEY_B = 66
+const B::Cint = 66
 "Key: C | c"
-const KEY_C = 67
+const C::Cint = 67
 "Key: D | d"
-const KEY_D = 68
+const D::Cint = 68
 "Key: E | e"
-const KEY_E = 69
+const E::Cint = 69
 "Key: F | f"
-const KEY_F = 70
+const F::Cint = 70
 "Key: G | g"
-const KEY_G = 71
+const G::Cint = 71
 "Key: H | h"
-const KEY_H = 72
+const H::Cint = 72
 "Key: I | i"
-const KEY_I = 73
+const I::Cint = 73
 "Key: J | j"
-const KEY_J = 74
+const J::Cint = 74
 "Key: K | k"
-const KEY_K = 75
+const K::Cint = 75
 "Key: L | l"
-const KEY_L = 76
+const L::Cint = 76
 "Key: M | m"
-const KEY_M = 77
+const M::Cint = 77
 "Key: N | n"
-const KEY_N = 78
+const N::Cint = 78
 "Key: O | o"
-const KEY_O = 79
+const O::Cint = 79
 "Key: P | p"
-const KEY_P = 80
+const P::Cint = 80
 "Key: Q | q"
-const KEY_Q = 81
+const Q::Cint = 81
 "Key: R | r"
-const KEY_R = 82
+const R::Cint = 82
 "Key: S | s"
-const KEY_S = 83
+const S::Cint = 83
 "Key: T | t"
-const KEY_T = 84
+const T::Cint = 84
 "Key: U | u"
-const KEY_U = 85
+const U::Cint = 85
 "Key: V | v"
-const KEY_V = 86
+const V::Cint = 86
 "Key: W | w"
-const KEY_W = 87
+const W::Cint = 87
 "Key: X | x"
-const KEY_X = 88
+const X::Cint = 88
 "Key: Y | y"
-const KEY_Y = 89
+const Y::Cint = 89
 "Key: Z | z"
-const KEY_Z = 90
+const Z::Cint = 90
 "Key: ["
-const KEY_LEFT_BRACKET = 91
+const LEFT_BRACKET::Cint = 91
 "Key: '\\'"
-const KEY_BACKSLASH = 92
+const BACKSLASH::Cint = 92
 "Key: ]"
-const KEY_RIGHT_BRACKET = 93
+const RIGHT_BRACKET::Cint = 93
 "Key: `"
-const KEY_GRAVE = 96
+const GRAVE::Cint = 96
 
 #"Function keys"
 "Key: Space"
-const KEY_SPACE = 32
+const SPACE::Cint = 32
 "Key: Esc"
-const KEY_ESCAPE = 256
+const ESCAPE::Cint = 256
 "Key: Enter"
-const KEY_ENTER = 257
+const ENTER::Cint = 257
 "Key: Tab"
-const KEY_TAB = 258
+const TAB::Cint = 258
 "Key: Backspace"
-const KEY_BACKSPACE = 259
+const BACKSPACE::Cint = 259
 "Key: Ins"
-const KEY_INSERT = 260
+const INSERT::Cint = 260
 "Key: Del"
-const KEY_DELETE = 261
+const DELETE::Cint = 261
 "Key: Cursor right"
-const KEY_RIGHT = 262
+const RIGHT::Cint = 262
 "Key: Cursor left"
-const KEY_LEFT = 263
+const LEFT::Cint = 263
 "Key: Cursor down"
-const KEY_DOWN = 264
+const DOWN::Cint = 264
 "Key: Cursor up"
-const KEY_UP = 265
+const UP::Cint = 265
 "Key: Page up"
-const KEY_PAGE_UP = 266
+const PAGE_UP::Cint = 266
 "Key: Page down"
-const KEY_PAGE_DOWN = 267
+const PAGE_DOWN::Cint = 267
 "Key: Home"
-const KEY_HOME = 268
+const HOME::Cint = 268
 "Key: End"
-const KEY_END = 269
+const END::Cint = 269
 "Key: Caps lock"
-const KEY_CAPS_LOCK = 280
+const CAPS_LOCK::Cint = 280
 "Key: Scroll down"
-const KEY_SCROLL_LOCK = 281
+const SCROLL_LOCK::Cint = 281
 "Key: Num lock"
-const KEY_NUM_LOCK = 282
+const NUM_LOCK::Cint = 282
 "Key: Print screen"
-const KEY_PRINT_SCREEN = 283
+const PRINT_SCREEN::Cint = 283
 "Key: Pause"
-const KEY_PAUSE = 284
+const PAUSE::Cint = 284
 "Key: F1"
-const KEY_F1 = 290
+const F1::Cint = 290
 "Key: F2"
-const KEY_F2 = 291
+const F2::Cint = 291
 "Key: F3"
-const KEY_F3 = 292
+const F3::Cint = 292
 "Key: F4"
-const KEY_F4 = 293
+const F4::Cint = 293
 "Key: F5"
-const KEY_F5 = 294
+const F5::Cint = 294
 "Key: F6"
-const KEY_F6 = 295
+const F6::Cint = 295
 "Key: F7"
-const KEY_F7 = 296
+const F7::Cint = 296
 "Key: F8"
-const KEY_F8 = 297
+const F8::Cint = 297
 "Key: F9"
-const KEY_F9 = 298
+const F9::Cint = 298
 "Key: F10"
-const KEY_F10 = 299
+const F10::Cint = 299
 "Key: F11"
-const KEY_F11 = 300
+const F11::Cint = 300
 "Key: F12"
-const KEY_F12 = 301
+const F12::Cint = 301
 "Key: Shift left"
-const KEY_LEFT_SHIFT = 340
+const LEFT_SHIFT::Cint = 340
 "Key: Control left"
-const KEY_LEFT_CONTROL = 341
+const LEFT_CONTROL::Cint = 341
 "Key: Alt left"
-const KEY_LEFT_ALT = 342
+const LEFT_ALT::Cint = 342
 "Key: Super left"
-const KEY_LEFT_SUPER = 343
+const LEFT_SUPER::Cint = 343
 "Key: Shift right"
-const KEY_RIGHT_SHIFT = 344
+const RIGHT_SHIFT::Cint = 344
 "Key: Control right"
-const KEY_RIGHT_CONTROL = 345
+const RIGHT_CONTROL::Cint = 345
 "Key: Alt right"
-const KEY_RIGHT_ALT = 346
+const RIGHT_ALT::Cint = 346
 "Key: Super right"
-const KEY_RIGHT_SUPER = 347
+const RIGHT_SUPER::Cint = 347
 "Key: KB menu"
-const KEY_KB_MENU = 348
+const KB_MENU::Cint = 348
 
 #"Keypad keys"
 "Key: Keypad 0"
-const KEY_KP_0 = 320
+const KP_0::Cint = 320
 "Key: Keypad 1"
-const KEY_KP_1 = 321
+const KP_1::Cint = 321
 "Key: Keypad 2"
-const KEY_KP_2 = 322
+const KP_2::Cint = 322
 "Key: Keypad 3"
-const KEY_KP_3 = 323
+const KP_3::Cint = 323
 "Key: Keypad 4"
-const KEY_KP_4 = 324
+const KP_4::Cint = 324
 "Key: Keypad 5"
-const KEY_KP_5 = 325
+const KP_5::Cint = 325
 "Key: Keypad 6"
-const KEY_KP_6 = 326
+const KP_6::Cint = 326
 "Key: Keypad 7"
-const KEY_KP_7 = 327
+const KP_7::Cint = 327
 "Key: Keypad 8"
-const KEY_KP_8 = 328
+const KP_8::Cint = 328
 "Key: Keypad 9"
-const KEY_KP_9 = 329
+const KP_9::Cint = 329
 "Key: Keypad ."
-const KEY_KP_DECIMAL = 330
+const KP_DECIMAL::Cint = 330
 "Key: Keypad /"
-const KEY_KP_DIVIDE = 331
+const KP_DIVIDE::Cint = 331
 "Key: Keypad *"
-const KEY_KP_MULTIPLY = 332
+const KP_MULTIPLY::Cint = 332
 "Key: Keypad -"
-const KEY_KP_SUBTRACT = 333
+const KP_SUBTRACT::Cint = 333
 "Key: Keypad +"
-const KEY_KP_ADD = 334
+const KP_ADD::Cint = 334
 "Key: Keypad Enter"
-const KEY_KP_ENTER = 335
-"Key: Keypad ="
-const KEY_KP_EQUAL = 336
+const KP_ENTER::Cint = 335
+"Key: Keypad::Cint ="
+const KP_EQUAL::Cint = 336
 
 #"Android key buttons"
 "Key: Android back button"
-const KEY_BACK = 4
+const BACK::Cint = 4
 "Key: Android menu button"
-const KEY_MENU = 82
+const MENU::Cint = 82
 "Key: Android volume up button"
-const KEY_VOLUME_UP = 24
+const VOLUME_UP::Cint = 24
 "Key: Android volume down button"
-const KEY_VOLUME_DOWN = 25
+const VOLUME_DOWN::Cint = 25
 end
 
 "Initialize window and OpenGL context"
@@ -835,7 +829,7 @@ end
 
 "Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)"
 function window_should_close()::Bool
-    (@ccall raylib.WindowShouldClose()::Cint) != 0
+    @ccall raylib.WindowShouldClose()::Cbool
 end
 
 "Draw a color-filled rectangle"
@@ -859,5 +853,15 @@ function draw_text(
         font_size::Cint,
         color::Color
     )::Cvoid
+end
+
+"Check if a key is being pressed"
+function is_key_down(key::Cint)
+    @ccall raylib.IsKeyDown(key::Cint)::Cbool
+end
+
+"Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty"
+function get_key_pressed()
+    @ccall raylib.GetKeyPressed()::Cint
 end
 end
