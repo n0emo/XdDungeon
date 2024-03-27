@@ -1,7 +1,7 @@
 module Raylib
 
 using Base: make_typealias
-const raylib = "libraylib.so"
+const raylib = "./lib/libraylib.so.5.0.0"
 
 const Cbool = Bool
 
@@ -12,6 +12,13 @@ struct Vector2
     "Vector y component"
     y::Cfloat
 end
+
+Base.:+(vec::Vector2, num::Number) = Vector2(vec.x + num, vec.y + num)
+Base.:+(a::Vector2, b::Vector2) = Vector2(a.x + b.x, a.y + b.y)
+
+Base.:-(vec::Vector2, num::Number) = Vector2(vec.x - num, vec.y - num)
+Base.:*(vec::Vector2, num::Number) = Vector2(vec.x * num, vec.y * num)
+Base.:/(vec::Vector2, num::Number) = Vector2(vec.x / num, vec.y / num)
 
 "Vector3, 3 components"
 struct Vector3
@@ -827,6 +834,14 @@ function end_drawing()
     @ccall raylib.EndDrawing()::Cvoid
 end
 
+function begin_mode_2d(camera::Camera2D)
+    @ccall raylib.BeginMode2D(camera::Camera2D)::Cvoid
+end
+
+function end_mode_2d()
+    @ccall raylib.EndMode2D()::Cvoid
+end
+
 "Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)"
 function window_should_close()::Bool
     @ccall raylib.WindowShouldClose()::Cbool
@@ -837,6 +852,12 @@ function draw_rectangle(
     pos_x::Integer, pos_y::Integer, width::Integer, height::Integer, color::Color)
     @ccall raylib.DrawRectangle(
         pos_x::Cint, pos_y::Cint, width::Cint, height::Cint, color::Color)::Cvoid
+end
+
+function draw_rectangle_v(
+    position::Vector2, size::Vector2, color::Color)
+    @ccall raylib.DrawRectangleV(
+        position::Vector2, size::Vector2, color::Color)::Cvoid
 end
 
 "Draw text (using default font) within an image (destination)"
@@ -858,6 +879,10 @@ end
 "Check if a key is being pressed"
 function is_key_down(key::Cint)
     @ccall raylib.IsKeyDown(key::Cint)::Cbool
+end
+
+function is_key_pressed(key::Cint)
+    @ccall raylib.IsKeyPressed(key::Cint)::Cbool
 end
 
 "Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty"
