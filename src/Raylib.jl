@@ -19,6 +19,7 @@ Base.:+(a::Vector2, b::Vector2) = Vector2(a.x + b.x, a.y + b.y)
 Base.:-(vec::Vector2, num::Number) = Vector2(vec.x - num, vec.y - num)
 Base.:*(vec::Vector2, num::Number) = Vector2(vec.x * num, vec.y * num)
 Base.:/(vec::Vector2, num::Number) = Vector2(vec.x / num, vec.y / num)
+Base.:^(vec::Vector2, num::Number) = Vector2(vec.x^num, vec.y^num)
 
 "Vector3, 3 components"
 struct Vector3

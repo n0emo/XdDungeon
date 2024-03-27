@@ -97,11 +97,20 @@ function move_player(game::Game)
     end
 end
 
-function linear_interpolation(
-    vec::Raylib.Vector2,
-    target::Raylib.Vector2,
+function lerp(
+    a::Raylib.Vector2,
+    b::Raylib.Vector2,
     ratio::Float64)::Raylib.Vector2
-    vec * ratio + target * (1 - ratio)
+    a * (1 - ratio) + b * ratio
+end
+
+function eerp(
+    a::Raylib.Vector2,
+    b::Raylib.Vector2,
+    ratio::Float64)::Raylib.Vector2
+    a = a^(1 - ratio)
+    b = b^ratio
+    Raylib.Vector2(a.x * b.x, a.y * b.y)
 end
 
 function draw(game::Game, camera::Raylib.Camera2D)
@@ -135,7 +144,7 @@ function main()
 
         camera = Raylib.Camera2D(
             (Raylib.Vector2(width, height) - size) / 2,
-            linear_interpolation(camera.target, game.player.position * size, 0.92),
+            eerp(camera.target, game.player.position * size, 0.05),
             0, 1)
 
         Raylib.begin_drawing()
