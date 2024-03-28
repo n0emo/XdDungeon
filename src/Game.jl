@@ -124,8 +124,8 @@ function generate_game()::Game
 
     root = rooms[1]
     game.player = Player(
-        floor(root.rect.width / 2) + offset_x,
-        floor(root.rect.height / 2) + offset_y)
+        floor(root.rect.x + root.rect.width / 2 + offset_x),
+        floor(root.rect.y + root.rect.height / 2 + offset_y))
 
     game
 end
